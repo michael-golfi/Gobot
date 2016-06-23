@@ -1,4 +1,4 @@
-package grott
+package types
 
 import "time"
 

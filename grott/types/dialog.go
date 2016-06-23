@@ -1,4 +1,4 @@
-package grott
+package types
 
 type Dialog interface {
 	Begin(session Session, args interface{})

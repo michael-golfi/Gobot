@@ -1,4 +1,4 @@
-package grott
+package types
 
 type Message struct {
 	MessageType           string
@@ -23,14 +23,13 @@ type Message struct {
 	ETag                  string
 }
 
-type Message interface {
-	SetLanguage(language string) Message
-	SetText(session Session, prompt []string, args interface{}) Message
-	SetNText(Session Session, msg string, msgPlural string, count int) Message
+type IMessage interface {
+	SetLanguage(language string)
+	SetText(session Session, prompt []string, args interface{})
+	SetNText(Session Session, msg string, msgPlural string, count int)
 	ComposePrompt(Session Session, prompts [][]string, args interface{})
-	AddAttachment(attachment Attachment) Message
-	SetChannelData(data interface{}) Message
-
+	AddAttachment(attachment Attachment)
+	SetChannelData(data interface{})
 }
 
 type Attachment struct {
