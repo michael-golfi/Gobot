@@ -1,11 +1,11 @@
 package grott
 
 import (
-	"net/http"
 	"encoding/json"
 	"fmt"
-	"github.com/michael-golfi/Grott/grott/types"
 	"github.com/michael-golfi/Grott/grott/controller"
+	"github.com/michael-golfi/Grott/grott/types"
+	"net/http"
 )
 
 func ListenAndServe() error {

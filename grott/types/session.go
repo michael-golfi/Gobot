@@ -12,5 +12,4 @@ type Session struct {
 }
 
 type SessionAction struct {
-
 }

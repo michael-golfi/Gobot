@@ -1,14 +1,14 @@
 package controller
 
 import (
-	"github.com/michael-golfi/Grott/grott/types"
+	"errors"
 	"fmt"
 	"github.com/michael-golfi/Grott/grott/dialog"
-	"errors"
+	"github.com/michael-golfi/Grott/grott/types"
 )
 
 var (
-	send chan types.Message
+	send    chan types.Message
 	receive chan types.Message
 )
 
@@ -20,7 +20,7 @@ func init() {
 
 func Post(msg *types.Message) *types.Message {
 	if msg.MessageType == "Message" {
-		send <- *msg
+		send <- msg
 		msgReceived := <-receive
 		return &msgReceived
 	}

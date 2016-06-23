@@ -8,5 +8,4 @@ type Dialog interface {
 }
 
 type DialogAction interface {
-
 }

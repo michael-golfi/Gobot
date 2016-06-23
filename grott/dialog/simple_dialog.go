@@ -1,8 +1,8 @@
 package dialog
 
 import (
-	"github.com/michael-golfi/Grott/grott/types"
 	"fmt"
+	"github.com/michael-golfi/Grott/grott/types"
 )
 
 type SimpleDialog struct {
@@ -12,7 +12,7 @@ type SimpleDialog struct {
 
 func NewSimpleDialog(input, output chan types.Message) *SimpleDialog {
 	simpleDialog := &SimpleDialog{
-		In: input,
+		In:  input,
 		Out: output,
 	}
 

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"log"
 	"github.com/michael-golfi/Grott/grott"
+	"log"
 )
 
 func main() {
