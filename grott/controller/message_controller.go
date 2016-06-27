@@ -3,20 +3,8 @@ package controller
 import (
 	"errors"
 	"fmt"
-	"github.com/michael-golfi/Grott/grott/dialog"
 	"github.com/michael-golfi/Grott/grott/types"
 )
-
-var (
-	send    chan types.Message
-	receive chan types.Message
-)
-
-func init() {
-	send = make(chan types.Message, 5)
-	receive = make(chan types.Message, 5)
-	dialog.NewSimpleDialog(send, receive)
-}
 
 func Post(msg *types.Message) *types.Message {
 	if msg.MessageType == "Message" {

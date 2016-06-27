@@ -8,7 +8,9 @@ import (
 	"net/http"
 )
 
-func ListenAndServe() error {
+func ListenAndServe(dialog *types.Dialog) error {
+
+	controller.StartBot(dialog)
 
 	http.HandleFunc("/api/message", func(w http.ResponseWriter, r *http.Request) {
 		var message types.Message
