@@ -9,7 +9,7 @@ import (
 func main() {
 	log.Print("Starting Bot")
 
-	dialog := &dialog.SimpleDialog{}
+	dialog := new (dialog.SimpleDialog)
 
-	log.Fatal(grott.ListenAndServe(dialog))
+	log.Fatal(grott.ListenAndServe(*dialog))
 }

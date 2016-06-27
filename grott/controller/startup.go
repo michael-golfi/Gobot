@@ -2,7 +2,6 @@ package controller
 
 import (
 	"github.com/michael-golfi/Grott/grott/types"
-	"github.com/michael-golfi/Grott/grott/dialog"
 )
 
 var (
@@ -10,6 +9,6 @@ var (
 	receive = make(chan types.Message, 1)
 )
 
-func StartBot(d *types.Dialog) {
-	dialog.Start(d, send, receive)
+func StartBot(d types.Dialog) {
+	types.Start(d, send, receive)
 }

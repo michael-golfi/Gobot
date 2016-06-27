@@ -8,7 +8,7 @@ import (
 
 func Post(msg *types.Message) *types.Message {
 	if msg.MessageType == "Message" {
-		send <- msg
+		send <- *msg
 		msgReceived := <-receive
 		return &msgReceived
 	}
