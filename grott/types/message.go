@@ -25,9 +25,9 @@ type Message struct {
 
 type IMessage interface {
 	SetLanguage(language string)
-	SetText(session Session, prompt []string, args interface{})
-	SetNText(Session Session, msg string, msgPlural string, count int)
-	ComposePrompt(Session Session, prompts [][]string, args interface{})
+	//SetText(session Session, prompt []string, args interface{})
+	//SetNText(Session Session, msg string, msgPlural string, count int)
+	//ComposePrompt(Session Session, prompts [][]string, args interface{})
 	AddAttachment(attachment Attachment)
 	SetChannelData(data interface{})
 }
@@ -75,7 +75,7 @@ type Localizer interface {
 }
 
 type SessionOptions struct {
-	Dialogs      []Dialog
+	Dialogs      []Dialoger
 	DialogId     string
 	DialogArgs   interface{}
 	Localizer    Localizer

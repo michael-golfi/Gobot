@@ -27,19 +27,15 @@ func (d SimpleDialog) GetOutput() chan types.Message {
 
 /**
 	Interface functions
- */
-func (d SimpleDialog) Begin(session types.Session, args interface{}) {
+*
+func (d SimpleDialog) Begin(sessionKeeper types.SessionKeeper, args interface{}) {
 
 }
 
-func (d SimpleDialog) ReplyReceived(session types.Session) {
+func (d SimpleDialog) ReplyReceived(sessionKeeper types.SessionKeeper) {
 
 }
 
-func (d SimpleDialog) DialogResumed(session types.Session, result chan interface{}) {
+func (d SimpleDialog) DialogResumed(sessionKeeper types.SessionKeeper, result chan interface{}) {
 
-}
-
-func (d SimpleDialog) CompareConfidence(action types.SessionAction, language, utterance string, score int) {
-
-}
+}*/

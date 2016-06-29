@@ -9,6 +9,6 @@ var (
 	receive = make(chan types.Message, 1)
 )
 
-func StartBot(d types.Dialog) {
+func StartBot(d types.Dialoger) {
 	types.Start(d, send, receive)
 }

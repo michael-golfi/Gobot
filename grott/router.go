@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func ListenAndServe(dialog types.Dialog) error {
+func ListenAndServe(dialog types.Dialoger) error {
 
 	controller.StartBot(dialog)
 
