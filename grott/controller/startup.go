@@ -10,5 +10,5 @@ var (
 )
 
 func StartBot(d types.Dialoger) {
-	types.Start(d, send, receive)
+	go types.Start(d, send, receive)
 }

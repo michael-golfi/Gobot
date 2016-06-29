@@ -5,16 +5,7 @@ import (
 )
 
 type Dialoger interface {
-	SetInput(in chan Message)
-	SetOutput(out chan Message)
-
-	GetInput() chan Message
-	GetOutput() chan Message
-
-	//Begin(session SessionKeeper, args interface{})
-	//ReplyReceived(session SessionKeeper)
-	//DialogResumed(session SessionKeeper, result chan interface{})
-	//CompareConfidence(action SessionAction, language, utterance string, score int)
+	MessageReceived(ctx DialogContext, msg Message) (Message, error)
 }
 
 type DialogAction interface {
@@ -22,22 +13,33 @@ type DialogAction interface {
 }
 
 type DialogContext struct {
-
+	ConversationData          map[string]interface{}
+	PerUserInConversationData map[string]interface{}
+	UserData                  map[string]interface{}
 }
 
 func Start(dialog Dialoger, in, out chan Message) {
-	dialog.SetInput(in)
-	dialog.SetOutput(out)
+	ctx := DialogContext{
+		ConversationData: make(map[string]interface{}),
+		UserData: make(map[string]interface{}),
+		PerUserInConversationData: make(map[string]interface{}),
+	}
 
+	for {
+		message := <-in
 
+		// TODO - Get Session
+		// Message received
 
-	go func(In, Out chan Message) {
-		for {
-			message := <-In
+		msg, err := dialog.MessageReceived(ctx, message)
 
-			// TODO - Get Session
-
-			fmt.Println(message.Text)
+		if err != nil {
+			fmt.Printf("Error: %s\n", err.Error())
+			continue
 		}
-	}(dialog.GetInput(), dialog.GetOutput())
+
+		out <- msg
+
+		fmt.Println(message.Text)
+	}
 }

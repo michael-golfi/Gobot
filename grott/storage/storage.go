@@ -1,7 +1,7 @@
 package storage
 
 type Storage interface {
-	Get(id string, data chan interface{})
-	Save(id string, data interface{}, err chan error)
+	Get(id string) (interface{}, error)
+	Save(id string, data interface{}) error
 	Delete(id string)
 }

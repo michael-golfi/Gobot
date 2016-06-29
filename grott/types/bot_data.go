@@ -3,12 +3,39 @@ package types
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
+	"errors"
+)
+
+const (
+	BotConversationData = 0
+	BotUserData = 1
+	BotPerUserInConversationData = 2
 )
 
 type BotDataKey struct {
 	BotId          string
 	UserId         string
 	ConversationId string
+}
+
+type BotDataEntry struct {
+	BotConversationData          interface{}
+	BotPerUserInConversationData interface{}
+	BotUserData                  interface{}
+}
+
+func (b *BotDataKey) GetKey(keyType int) (string, error) {
+	switch (keyType) {
+	case BotConversationData:
+		return fmt.Sprintf("conversation:%s:%s", b.BotId, b.ConversationId), nil
+	case BotUserData:
+		return fmt.Sprintf("user:%s:%s", b.BotId, b.UserId), nil
+	case BotPerUserInConversationData:
+		return fmt.Sprintf("perUserInConversation:%s:%s:%s", b.BotId, b.UserId, b.ConversationId), nil
+	default:
+		return nil, errors.New("Could not get key for unknown type of data")
+	}
 }
 
 func AreEqual(key1, key2 BotDataKey) bool {
