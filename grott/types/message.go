@@ -33,7 +33,7 @@ type IMessage interface {
 }
 
 type Attachment struct {
-	Actions      []Action
+	Actions      []MessageAction
 	ContentType  string
 	ContentUrl   string
 	FallbackText string
@@ -43,7 +43,7 @@ type Attachment struct {
 	ThumbnailUrl string
 }
 
-type Action struct {
+type MessageAction struct {
 	Title   string
 	Message string
 	Url     string

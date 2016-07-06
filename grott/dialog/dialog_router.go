@@ -23,15 +23,15 @@ func Start(dialogs []types.Dialoger, storage storage.ContextStorage) *DialogRout
 	}
 }
 
-func (router *DialogRouter) HandleMessage(message types.Message) (types.Message, error) {
+func (router *DialogRouter) HandleMessage(message *types.Message) (*types.Message, error) {
 
-	var msg types.Message
+	var msg *types.Message
 	var e error
 
 	wait := sync.WaitGroup{}
 	wait.Add(1)
 
-	go func(d *DialogRouter, m types.Message) {
+	go func(d *DialogRouter, m *types.Message) {
 		highestIndex := 0
 		var err error
 
@@ -67,7 +67,7 @@ func (router *DialogRouter) HandleMessage(message types.Message) (types.Message,
 	return msg, e
 }
 
-func getHighestScoringDialog(dialogs []types.Dialoger, msg types.Message) (int, error) {
+func getHighestScoringDialog(dialogs []types.Dialoger, msg *types.Message) (int, error) {
 
 	highestIndex := 0
 	highestScore := 0
