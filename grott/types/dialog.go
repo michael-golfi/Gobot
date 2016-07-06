@@ -6,6 +6,7 @@ import (
 
 type Dialoger interface {
 	MessageReceived(ctx DialogContext, msg Message) (Message, error)
+	CalculateScore(msg Message) (int, error)
 }
 
 type DialogAction interface {
