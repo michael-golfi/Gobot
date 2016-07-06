@@ -34,7 +34,7 @@ func (b *BotDataKey) GetKey(keyType int) (string, error) {
 	case BotPerUserInConversationData:
 		return fmt.Sprintf("perUserInConversation:%s:%s:%s", b.BotId, b.UserId, b.ConversationId), nil
 	default:
-		return nil, errors.New("Could not get key for unknown type of data")
+		return "", errors.New("Could not get key for unknown type of data")
 	}
 }
 

@@ -5,7 +5,7 @@ import (
 )
 
 type Dialoger interface {
-	MessageReceived(ctx DialogContext, msg Message) (Message, error)
+	MessageReceived(ctx *DialogContext, msg Message) (Message, error)
 	CalculateScore(msg Message) (int, error)
 }
 
@@ -20,7 +20,7 @@ type DialogContext struct {
 }
 
 func Start(dialog Dialoger, in, out chan Message) {
-	ctx := DialogContext{
+	ctx := &DialogContext{
 		ConversationData: make(map[string]interface{}),
 		UserData: make(map[string]interface{}),
 		PerUserInConversationData: make(map[string]interface{}),

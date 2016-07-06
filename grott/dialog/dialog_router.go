@@ -3,23 +3,20 @@ package dialog
 import (
 	"github.com/michael-golfi/Grott/grott/types"
 	"github.com/michael-golfi/Grott/grott/storage"
+	"sync"
 )
 
 type DialogRouter struct {
 	Dialogs        []types.Dialoger
-	ContextStorage storage.Storage
+	ContextStorage storage.ContextStorage
 }
 
-func Start(dialogs []types.Dialoger) *DialogRouter {
+func StartInMemoryStorage(dialogs []types.Dialoger) *DialogRouter {
 	inMemoryStorage := storage.InMemoryStorage{}
-
-	return &DialogRouter{
-		Dialogs: dialogs,
-		ContextStorage: inMemoryStorage,
-	}
+	return Start(dialogs, inMemoryStorage)
 }
 
-func StartWithStorage(dialogs []types.Dialoger, storage storage.Storage) *DialogRouter {
+func Start(dialogs []types.Dialoger, storage storage.ContextStorage) *DialogRouter {
 	return &DialogRouter{
 		Dialogs: dialogs,
 		ContextStorage: storage,
@@ -28,37 +25,49 @@ func StartWithStorage(dialogs []types.Dialoger, storage storage.Storage) *Dialog
 
 func (router *DialogRouter) HandleMessage(message types.Message) (types.Message, error) {
 
-	respChan := make(chan types.Message, 1)
-	errChan := make(chan error, 1)
+	var msg types.Message
+	var e error
 
-	go func(r chan types.Message, e chan error, d DialogRouter, m types.Message) {
+	wait := sync.WaitGroup{}
+	wait.Add(1)
+
+	go func(d *DialogRouter, m types.Message) {
 		highestIndex := 0
+		var err error
+
 		if len(d.Dialogs) > 1 {
-			highestIndex = getHighestScoringDialog(d.Dialogs, m)
+			highestIndex, err = getHighestScoringDialog(d.Dialogs, m)
+
+			if err != nil {
+				e = err
+				wait.Done()
+				return
+			}
 		}
 
 		msgCtx, err := d.ContextStorage.Get(m.ConversationId)
 		if err != nil {
-			e <- err
-			r <- nil
+			e = err
+			wait.Done()
 			return
 		}
 
 		resp, err := d.Dialogs[highestIndex].MessageReceived(msgCtx, m)
 		if err != nil {
-			e <- err
-			r <- nil
+			e = err
+			wait.Done()
 			return
 		}
 
-		r <- resp
-		e <- nil
-	}(respChan, errChan, router, message)
+		msg = resp
+		e = nil
+	}(router, message)
 
-	return <-respChan, <-errChan
+	wait.Wait()
+	return msg, e
 }
 
-func getHighestScoringDialog(dialogs []types.Dialoger, msg types.Message) *types.Dialoger {
+func getHighestScoringDialog(dialogs []types.Dialoger, msg types.Message) (int, error) {
 
 	highestIndex := 0
 	highestScore := 0
@@ -68,7 +77,7 @@ func getHighestScoringDialog(dialogs []types.Dialoger, msg types.Message) *types
 		score, err := dialog.CalculateScore(msg)
 
 		if err != nil {
-			return err
+			return -1, err
 		}
 
 		if score > highestScore {
@@ -78,5 +87,5 @@ func getHighestScoringDialog(dialogs []types.Dialoger, msg types.Message) *types
 
 	}
 
-	return highestIndex
+	return highestIndex, nil
 }
