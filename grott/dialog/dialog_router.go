@@ -11,12 +11,12 @@ type DialogRouter struct {
 	ContextStorage storage.ContextStorage
 }
 
-func StartInMemoryStorage(dialogs []types.Dialoger) *DialogRouter {
+func NewInMemoryStorageRouter(dialogs []types.Dialoger) *DialogRouter {
 	inMemoryStorage := storage.InMemoryStorage{}
-	return Start(dialogs, inMemoryStorage)
+	return NewRouter(dialogs, inMemoryStorage)
 }
 
-func Start(dialogs []types.Dialoger, storage storage.ContextStorage) *DialogRouter {
+func NewRouter(dialogs []types.Dialoger, storage storage.ContextStorage) *DialogRouter {
 	return &DialogRouter{
 		Dialogs: dialogs,
 		ContextStorage: storage,

@@ -1,27 +1,39 @@
 package controller
 
 import (
-	"errors"
 	"fmt"
+	"errors"
 	"github.com/michael-golfi/Grott/grott/types"
+	"github.com/michael-golfi/Grott/grott/dialog"
 )
 
-func Post(msg *types.Message) *types.Message {
-	if msg.MessageType == "Message" {
-		/*send <- *msg
-		msgReceived := <-receive
-		return &msgReceived*/
+type Controller struct {
+	router dialog.DialogRouter
+}
 
+func (c Controller) Post(msg *types.Message) *types.Message {
+	if msg.MessageType == "Message" {
+		msg, err := c.router.HandleMessage(msg)
+
+		// TODO - Bubble up error
+		if err != nil {
+			fmt.Errorf("Post Error: %s", err.Error())
+		}
+
+		return msg
 	}
 
-	m, err := handleSystemMessage(msg)
+	m, err := c.HandleSystemMessage(msg)
+
+	// TODO - Bubble up error
 	if err != nil {
 		fmt.Errorf("%s", err.Error())
 	}
+
 	return m
 }
 
-func handleSystemMessage(msg *types.Message) (*types.Message, error) {
+func (c Controller) HandleSystemMessage(msg *types.Message) (*types.Message, error) {
 	if msg.MessageType == "BotAddedToConversation" {
 		return &types.Message{
 			Text: "Hello World",
@@ -53,3 +65,4 @@ func handleSystemMessage(msg *types.Message) (*types.Message, error) {
 	}
 	return nil, errors.New("Not a System Message")
 }
+

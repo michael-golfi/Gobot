@@ -3,14 +3,14 @@ package grott
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/michael-golfi/Grott/grott/controller"
 	"github.com/michael-golfi/Grott/grott/types"
 	"net/http"
+	"github.com/michael-golfi/Grott/grott/dialog"
 )
 
-func ListenAndServe(dialog types.Dialoger) error {
+func ListenAndServe(cont types.Controller, router *dialog.DialogRouter) error {
 
-	controller.StartBot(dialog)
+	//controller.StartBot(dialog)
 
 	http.HandleFunc("/api/message", func(w http.ResponseWriter, r *http.Request) {
 		var message types.Message
@@ -19,7 +19,7 @@ func ListenAndServe(dialog types.Dialoger) error {
 			fmt.Errorf("Error Decoding Json: %s", err.Error())
 		}
 
-		response := controller.Post(&message)
+		response := cont.Post(&message)
 
 		if err := json.NewEncoder(w).Encode(response); err != nil {
 			fmt.Errorf("Error Encoding Json: %s", err.Error())
