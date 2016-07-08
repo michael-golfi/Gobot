@@ -5,14 +5,16 @@ import (
 	"github.com/michael-golfi/Grott/alfredo/controller"
 	"github.com/michael-golfi/Grott/grott/types"
 	"github.com/michael-golfi/Grott/grott/dialog"
+	"log"
 )
 
 func main() {
 
-
-	c := &controller.Controller{}
 	s := &dialog.SimpleDialog{}
 	dialogs := []types.Dialoger{s}
 	router := dialog.NewInMemoryStorageRouter(dialogs)
-	grott.ListenAndServe(c, router)
+	c := &controller.Controller{
+		Router: router,
+	}
+	log.Fatal(grott.ListenAndServe(c, router))
 }

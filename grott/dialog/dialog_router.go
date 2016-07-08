@@ -4,6 +4,7 @@ import (
 	"github.com/michael-golfi/Grott/grott/types"
 	"github.com/michael-golfi/Grott/grott/storage"
 	"sync"
+	"fmt"
 )
 
 type DialogRouter struct {
@@ -12,7 +13,9 @@ type DialogRouter struct {
 }
 
 func NewInMemoryStorageRouter(dialogs []types.Dialoger) *DialogRouter {
-	inMemoryStorage := storage.InMemoryStorage{}
+	inMemoryStorage := storage.InMemoryStorage{
+		Cache: make(map[string]*types.DialogContext, 1),
+	}
 	return NewRouter(dialogs, inMemoryStorage)
 }
 
@@ -47,9 +50,14 @@ func (router *DialogRouter) HandleMessage(message *types.Message) (*types.Messag
 
 		msgCtx, err := d.ContextStorage.Get(m.ConversationId)
 		if err != nil {
-			e = err
-			wait.Done()
-			return
+			fmt.Println(err.Error())
+
+			d.ContextStorage.Save(m.ConversationId, &types.DialogContext{
+				ConversationData:          make(map[string]string, 1),
+				PerUserInConversationData: make(map[string]string, 1),
+				UserData:                  make(map[string]string, 1),
+			})
+			// TODO - Just means the ctx doesn't exist
 		}
 
 		resp, err := d.Dialogs[highestIndex].MessageReceived(msgCtx, m)
@@ -61,6 +69,7 @@ func (router *DialogRouter) HandleMessage(message *types.Message) (*types.Messag
 
 		msg = resp
 		e = nil
+		wait.Done()
 	}(router, message)
 
 	wait.Wait()

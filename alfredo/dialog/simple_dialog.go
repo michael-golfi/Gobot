@@ -8,7 +8,7 @@ type SimpleDialog struct {
 
 func (d SimpleDialog) MessageReceived(ctx *types.DialogContext, msg *types.Message) (*types.Message, error) {
 	return &types.Message{
-		Text: "Hello World!",
+		Text: "Hello Grott!",
 	}, nil
 }
 

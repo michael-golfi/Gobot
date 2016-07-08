@@ -1,26 +1,26 @@
 package types
 
 type Message struct {
-	MessageType           string
-	Id                    string
-	ConversationId        string
-	Created               string
-	SourceText            string
-	SourceLanguage        string
-	Language              string
-	Text                  string
-	Attachments           []Attachment
-	From                  Account
-	ReplyToMessageId      string
-	Participants          []Account
-	Mentions              []Mention
-	Place                 string
-	ChannelMessageId      string
-	ChannelConversationId string
-	ChannelData           interface{}
-	Location              Location
-	Hashtags              []string
-	ETag                  string
+	MessageType           string `json:"type"`
+	Id                    string `json:"id"`
+	ConversationId        string `json:"conversationId"`
+	Created               string `json:"created"`
+	SourceText            string `json:"sourceText"`
+	SourceLanguage        string `json:"sourceLanguage"`
+	Language              string `json:"language"`
+	Text                  string `json:"text"`
+	Attachments           []Attachment `json:"attachments"`
+	From                  Account `json:"from"`
+	ReplyToMessageId      string `json:"replyToMessageId"`
+	Participants          []Account `json:"participants"`
+	Mentions              []Mention `json:"mentions"`
+	Place                 string `json:"place"`
+	ChannelMessageId      string `json:"channelMessageId"`
+	ChannelConversationId string `json:"channelConversationId"`
+	ChannelData           interface{} `json:"channelData"`
+	Location              Location `json:"location"`
+	Hashtags              []string `json:"hashtags"`
+	ETag                  string `json:"ETag"`
 }
 
 type IMessage interface {
@@ -33,40 +33,40 @@ type IMessage interface {
 }
 
 type Attachment struct {
-	Actions      []MessageAction
-	ContentType  string
-	ContentUrl   string
-	FallbackText string
-	Title        string
-	TitleLink    string
-	Text         string
-	ThumbnailUrl string
+	Actions      []MessageAction `json:"actions"`
+	ContentType  string `json:"contentType"`
+	ContentUrl   string `json:"contentUrl"`
+	FallbackText string `json:"fallbackText"`
+	Title        string `json:"title"`
+	TitleLink    string `json:"titleLink"`
+	Text         string `json:"text"`
+	ThumbnailUrl string `json:"thumbnailUrl"`
 }
 
 type MessageAction struct {
-	Title   string
-	Message string
-	Url     string
-	Image   string
+	Title   string `json:"title"`
+	Message string `json:"message"`
+	Url     string `json:"url"`
+	Image   string `json:"image"`
 }
 
 type Account struct {
-	Name      string
-	ChannelId string
-	Address   string
-	Id        string
-	IsBot     bool
+	Name      string `json:"name"`
+	ChannelId string `json:"channelId"`
+	Address   string `json:"address"`
+	Id        string `json:"id"`
+	IsBot     bool `json:"isBot"`
 }
 
 type Mention struct {
-	Mentioned Account
-	Text      string
+	Mentioned Account `json:"mentioned"`
+	Text      string `json:"text"`
 }
 
 type Location struct {
-	Altitude  float32
-	Latitude  float32
-	Longitude float32
+	Altitude  float32 `json:"altitude"`
+	Latitude  float32 `json:"latitude"`
+	Longitude float32 `json:"longitude"`
 }
 
 type Localizer interface {
@@ -75,16 +75,16 @@ type Localizer interface {
 }
 
 type SessionOptions struct {
-	Dialogs      []Dialoger
-	DialogId     string
-	DialogArgs   interface{}
-	Localizer    Localizer
-	MinSendDelay int32
+	Dialogs      []Dialoger `json:"dialogs"`
+	DialogId     string `json:"dialogId"`
+	DialogArgs   interface{} `json:"dialogArgs"`
+	Localizer    Localizer `json:"localizer"`
+	MinSendDelay int32 `json:"minSendDelay"`
 }
 
 type BotConnectorMessage struct {
-	Message
-	BotUserData                  map[string]interface{}
-	BotConversationData          map[string]interface{}
-	BotPerUserInConversationData map[string]interface{}
+	Message `json:"message"`
+	BotUserData                  map[string]interface{} `json:"botUserData"`
+	BotConversationData          map[string]interface{} `json:"botConversationData"`
+	BotPerUserInConversationData map[string]interface{} `json:"botPerUserInConversationData"`
 }

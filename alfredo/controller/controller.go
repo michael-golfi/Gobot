@@ -8,61 +8,55 @@ import (
 )
 
 type Controller struct {
-	router dialog.DialogRouter
+	Router *dialog.DialogRouter
 }
 
-func (c Controller) Post(msg *types.Message) *types.Message {
+func (c Controller) Post(msg *types.Message) (*types.Message, error) {
 	if msg.MessageType == "Message" {
-		msg, err := c.router.HandleMessage(msg)
-
-		// TODO - Bubble up error
-		if err != nil {
-			fmt.Errorf("Post Error: %s", err.Error())
-		}
-
-		return msg
+		return c.Router.HandleMessage(msg)
 	}
 
-	m, err := c.HandleSystemMessage(msg)
-
-	// TODO - Bubble up error
-	if err != nil {
-		fmt.Errorf("%s", err.Error())
-	}
-
-	return m
+	return c.HandleSystemMessage(msg)
 }
 
 func (c Controller) HandleSystemMessage(msg *types.Message) (*types.Message, error) {
+	fmt.Println("HandleSystemMessage")
+	fmt.Println(msg.MessageType)
 	if msg.MessageType == "BotAddedToConversation" {
+		fmt.Println("BotAddedToConversation")
 		return &types.Message{
 			Text: "Hello World",
 		}, nil
 	}
 
 	if msg.MessageType == "UserAddedToConversation" {
+		fmt.Println("UserAddedToConversation")
 		return &types.Message{
 			Text: "Hello Human!",
 		}, nil
 	}
 
 	if msg.MessageType == "BotRemovedFromConversation" {
+		fmt.Println("BotRemovedFromConversation")
 		return &types.Message{
 			Text: "Goodbye Bot!",
 		}, nil
 	}
 
 	if msg.MessageType == "UserRemovedFromConversation" {
+		fmt.Println("UserRemovedFromConversation")
 		return &types.Message{
 			Text: "Goodbye Human!",
 		}, nil
 	}
 
 	if msg.MessageType == "EndOfConversation" {
+		fmt.Println("EndOfConversation")
 		return &types.Message{
 			Text: "End of Conversation",
 		}, nil
 	}
+
 	return nil, errors.New("Not a System Message")
 }
 
