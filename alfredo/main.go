@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-
 	s := &dialog.SimpleDialog{}
 	dialogs := []types.Dialoger{s}
 	router := dialog.NewInMemoryStorageRouter(dialogs)

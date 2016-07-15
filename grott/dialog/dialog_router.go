@@ -14,7 +14,7 @@ type DialogRouter struct {
 
 func NewInMemoryStorageRouter(dialogs []types.Dialoger) *DialogRouter {
 	inMemoryStorage := storage.InMemoryStorage{
-		Cache: make(map[string]*types.DialogContext, 1),
+		cache: make(map[string]*types.DialogContext, 1),
 	}
 	return NewRouter(dialogs, inMemoryStorage)
 }
