@@ -3,11 +3,7 @@ package main
 import (
 	"github.com/michael-golfi/Grott/grott/connector"
 	"github.com/michael-golfi/Grott/grott/types"
-	"fmt"
-	"io/ioutil"
 	"time"
-	"net/http"
-	"sync"
 )
 
 func main() {
@@ -26,41 +22,29 @@ func main() {
 
 	activity := types.Activity{
 		Type: "ping",
-		Id: "j23oi4j23oi4j32o4ij324",
+		Id: "a8e5599a0e434e92994ebec5506d2be5",
 		Timestamp: time.Now(),
 		ServiceUrl: "http://localhost:9000",
 		ChannelId: "emulator",
 		From: types.ChannelAccount{
-			Id: "2343jd",
+			Id: "2c1c7fa3",
 			Name: "User1",
 		},
 		Conversation: types.ConversationAccount{
-			Id: "3i4j23oi4",
+			Id: "8a684db8",
 			Name: "Conv1",
 			IsGroup: false,
 		},
 		Recipient: types.ChannelAccount{
-			Id: "34jj23j2j",
+			Id: "56800324",
 			Name: "Bot1",
 		},
-		Text: "sent [Ping] to bot",
+		Text: "sent [Ping] to user",
 		Attachments: []types.Attachment{},
 		// Entities: []types.Entity{},
 	}
 
-	wait := sync.WaitGroup{}
-	wait.Add(1)
-
-	http.HandleFunc("/api/messages", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Handled")
-		wait.Done()
-	})
-
-	go http.ListenAndServe(":3798", nil)
-	
 	headers := map[string]string{}
 
-	conn.Send(activity, "3i4j23oi4", headers)
-
-	wait.Wait()
+	conn.Send(activity, "8a684db8", headers)
 }
