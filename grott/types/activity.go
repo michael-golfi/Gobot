@@ -18,10 +18,14 @@ type Activity struct {
 	TextFormat       string `json:"textFormat"`
 	AttachmentLayout string `json:"attachmentLayout"`
 	Attachments      []Attachment `json:"attachments"`
-	//Entities []Entity TODO
+	Entities         []Entity `json:"entities"`
 	ChannelData      interface{} `json:"channelData"`
 	ReplyToId        string `json:"replyToId"`
 	Mentions         []Mention `json:"mentions"`
+}
+
+type Entity struct {
+
 }
 
 type ChannelAccount struct {
