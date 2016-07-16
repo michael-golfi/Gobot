@@ -9,7 +9,7 @@ type Activity struct {
 	Timestamp        time.Time           `json:"timestamp"`
 	ChannelId        string              `json:"channelId"`
 	From             ChannelAccount      `json:"from"`
-	Conversation     ConversationAccount `json:"conversationAccount"`
+	Conversation     ConversationAccount `json:"conversation"`
 	Recipient        ChannelAccount      `json:"recipient"`
 
 	Locale           string `json:"locale"`
@@ -26,6 +26,10 @@ type Activity struct {
 
 type Entity struct {
 
+}
+
+type ApiResponse struct {
+	Message string `json:"message"`
 }
 
 type ChannelAccount struct {

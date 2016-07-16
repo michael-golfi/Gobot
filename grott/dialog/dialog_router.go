@@ -24,15 +24,14 @@ func NewRouter(dialogs []types.Dialoger, storage storage.ContextStorage) *Dialog
 	}
 }
 
-func (router *DialogRouter) HandleMessage(message *types.Message) (*types.Message, error) {
+func (router *DialogRouter) HandleMessage(message *types.Activity) error {
 
-	var msg *types.Message
 	var e error
 
 	wait := sync.WaitGroup{}
 	wait.Add(1)
 
-	go func(d *DialogRouter, m *types.Message) {
+	go func(d *DialogRouter, m *types.Activity) {
 		highestIndex := 0
 		var err error
 
@@ -46,11 +45,11 @@ func (router *DialogRouter) HandleMessage(message *types.Message) (*types.Messag
 			}
 		}
 
-		msgCtx, err := d.ContextStorage.Get(m.ConversationId)
+		msgCtx, err := d.ContextStorage.Get(m.Conversation.Id)
 		if err != nil {
 			fmt.Println(err.Error())
 
-			d.ContextStorage.Save(m.ConversationId, &types.DialogContext{
+			d.ContextStorage.Save(m.Conversation.Id, &types.DialogContext{
 				ConversationData:          make(map[string]string, 1),
 				PerUserInConversationData: make(map[string]string, 1),
 				UserData:                  make(map[string]string, 1),
@@ -58,23 +57,22 @@ func (router *DialogRouter) HandleMessage(message *types.Message) (*types.Messag
 			// TODO - Just means the ctx doesn't exist
 		}
 
-		resp, err := d.Dialogs[highestIndex].MessageReceived(msgCtx, m)
+		err = d.Dialogs[highestIndex].MessageReceived(msgCtx, m)
 		if err != nil {
 			e = err
 			wait.Done()
 			return
 		}
 
-		msg = resp
 		e = nil
 		wait.Done()
 	}(router, message)
 
 	wait.Wait()
-	return msg, e
+	return e
 }
 
-func getHighestScoringDialog(dialogs []types.Dialoger, msg *types.Message) (int, error) {
+func getHighestScoringDialog(dialogs []types.Dialoger, msg *types.Activity) (int, error) {
 
 	highestIndex := 0
 	highestScore := 0
