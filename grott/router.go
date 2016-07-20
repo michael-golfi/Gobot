@@ -1,7 +1,6 @@
 package grott
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/michael-golfi/Grott/grott/dialog"
 	"github.com/michael-golfi/Grott/grott/types"
@@ -20,7 +19,9 @@ func ListenAndServe(cont types.Controller, router *dialog.DialogRouter) error {
 			fmt.Errorf("Error Reading Body: %s", err.Error())
 		}
 
-		if err := json.Unmarshal(b, &message); err != nil {
+
+
+		if err := message.UnmarshalJSON(b); err != nil {
 			fmt.Errorf("Error Decoding Json: %s", err.Error())
 		}
 

@@ -15,6 +15,7 @@ type LuisDialog struct {
 	AppId          string
 	SubscriptionId string
 	Functions      map[string]func(*types.DialogContext, *types.LuisResult) (*types.Message, error)
+	input chan types.Activity
 }
 
 func (d LuisDialog) HandleFunc(name string, f func(*types.DialogContext, *types.LuisResult) (*types.Message, error)) error {

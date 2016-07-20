@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"errors"
 	"fmt"
 	"github.com/michael-golfi/Grott/grott/dialog"
 	"github.com/michael-golfi/Grott/grott/types"
@@ -15,9 +14,9 @@ type Controller struct {
 func (c Controller) Post(msg *types.Activity) {
 	if msg.Type == "message" {
 		c.Router.HandleMessage(msg)
+	} else {
+		c.HandleSystemMessage(msg)
 	}
-
-	c.HandleSystemMessage(msg)
 }
 
 func (c Controller) HandleSystemMessage(msg *types.Activity) {

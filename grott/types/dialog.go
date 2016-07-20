@@ -1,8 +1,7 @@
 package types
 
 type Dialoger interface {
-	MessageReceived(ctx *DialogContext, msg *Activity) error
-	CalculateScore(msg *Activity) (int, error)
+	MessageReceived(ctx *DialogContext, msg *Activity)
 }
 
 type DialogContext struct {
