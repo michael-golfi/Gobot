@@ -3,7 +3,7 @@ package connector
 import (
 	"bytes"
 	"fmt"
-	"github.com/michael-golfi/Grott/grott/types"
+	"github.com/michael-golfi/Grott/grott/activity"
 	"net/http"
 	"net/url"
 )
@@ -18,7 +18,7 @@ func NewClientConnector(url string) *ClientConnector {
 	}
 }
 
-func (c *ClientConnector) CreateConversation(parameters types.ConversationParameters, headers map[string]string) (*http.Response, error) {
+func (c *ClientConnector) CreateConversation(parameters activity.ConversationParameters, headers map[string]string) (*http.Response, error) {
 	baseUrl := fmt.Sprintf("%s/v3/conversations", c.baseUrl)
 
 	b, err := parameters.MarshalJSON()
@@ -29,7 +29,7 @@ func (c *ClientConnector) CreateConversation(parameters types.ConversationParame
 	return post(baseUrl, bytes.NewBuffer(b), headers)
 }
 
-func (c *ClientConnector) Send(activity types.Activity, conversationId string, headers map[string]string) (*http.Response, error) {
+func (c *ClientConnector) Send(activity activity.Activity, conversationId string, headers map[string]string) (*http.Response, error) {
 	uri, err := url.Parse(activity.ServiceUrl)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (c *ClientConnector) Send(activity types.Activity, conversationId string, h
 	return post(uri.String(), bytes.NewBuffer(b), headers)
 }
 
-func (c *ClientConnector) Respond(activity types.Activity, conversationId, activityId string, headers map[string]string) (*http.Response, error) {
+func (c *ClientConnector) Respond(activity activity.Activity, conversationId, activityId string, headers map[string]string) (*http.Response, error) {
 	uri, err := url.Parse(activity.ServiceUrl)
 	if err != nil {
 		return nil, err
@@ -72,7 +72,7 @@ func (c *ClientConnector) GetMembers(conversationId, activityId string, headers 
 	return get(uri.String(), headers)
 }
 
-func (c *ClientConnector) UploadAttachment(attachment types.AttachmentUpload, conversationId string, headers map[string]string) (*http.Response, error) {
+func (c *ClientConnector) UploadAttachment(attachment activity.AttachmentUpload, conversationId string, headers map[string]string) (*http.Response, error) {
 	uri, err := url.Parse(c.baseUrl)
 	if err != nil {
 		return nil, err

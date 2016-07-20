@@ -2,13 +2,14 @@ package bot_dialog
 
 import (
 	"github.com/michael-golfi/Grott/grott/connector"
-	"github.com/michael-golfi/Grott/grott/types"
+	"github.com/michael-golfi/Grott/grott/activity"
 	"log"
+	"github.com/michael-golfi/Grott/grott/storage"
 )
 
 type SimpleDialog struct {}
 
-func (d SimpleDialog) MessageReceived(ctx *types.DialogContext, msg *types.Activity) {
+func (d SimpleDialog) MessageReceived(ctx *storage.DialogContext, msg *activity.Activity) {
 	conn := connector.NewClientConnector(msg.ServiceUrl)
 	headers := map[string]string{}
 	msg.Text = "Hello User!"

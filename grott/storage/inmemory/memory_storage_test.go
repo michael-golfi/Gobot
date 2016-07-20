@@ -1,14 +1,14 @@
 package inmemory_test
 
 import (
-	"github.com/michael-golfi/Grott/grott/types"
+	"github.com/michael-golfi/Grott/grott/activity"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"github.com/michael-golfi/Grott/grott/storage/inmemory"
 )
 
 func TestInMemoryStorage(t *testing.T) {
-	ctx := &types.DialogContext{}
+	ctx := &activity.DialogContext{}
 
 	storage := inmemory.NewInMemoryStorage()
 	err := storage.Save("Example", ctx)

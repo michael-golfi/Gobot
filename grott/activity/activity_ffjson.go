@@ -3,7 +3,7 @@
 // source: grott/types/activity.go
 // DO NOT EDIT!
 
-package types
+package activity
 
 import (
 	"bytes"

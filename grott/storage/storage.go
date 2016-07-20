@@ -1,9 +1,13 @@
 package storage
 
-import "github.com/michael-golfi/Grott/grott/types"
+type DialogContext struct {
+	ConversationData          map[string]string
+	PerUserInConversationData map[string]string
+	UserData                  map[string]string
+}
 
 type ContextStorage interface {
-	Get(id string) (*types.DialogContext, error)
-	Save(id string, data *types.DialogContext) error
+	Get(id string) (*DialogContext, error)
+	Save(id string, data *DialogContext) error
 	Delete(id string)
 }

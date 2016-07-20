@@ -1,17 +1,16 @@
-package types
+package activity
 
 import "time"
 
 type Activity struct {
-	Type         string              `json:"type"`
-	Id           string              `json:"id"`
-	ServiceUrl   string              `json:"serviceUrl"`
-	Timestamp    time.Time           `json:"timestamp"`
-	ChannelId    string              `json:"channelId"`
-	From         ChannelAccount      `json:"from"`
-	Conversation ConversationAccount `json:"conversation"`
-	Recipient    ChannelAccount      `json:"recipient"`
-
+	Type             string              `json:"type"`
+	Id               string              `json:"id"`
+	ServiceUrl       string              `json:"serviceUrl"`
+	Timestamp        time.Time           `json:"timestamp"`
+	ChannelId        string              `json:"channelId"`
+	From             ChannelAccount      `json:"from"`
+	Conversation     ConversationAccount `json:"conversation"`
+	Recipient        ChannelAccount      `json:"recipient"`
 	Locale           string       `json:"locale"`
 	Text             string       `json:"text"`
 	Summary          string       `json:"summary"`
@@ -62,4 +61,35 @@ func (a Activity) CreateReply(msg string) Activity {
 	activity.From = a.Recipient
 	activity.Recipient = a.From
 	return activity
+}
+
+type Attachment struct {
+	Actions      []MessageAction `json:"actions"`
+	ContentType  string          `json:"contentType"`
+	ContentUrl   string          `json:"contentUrl"`
+	FallbackText string          `json:"fallbackText"`
+	Title        string          `json:"title"`
+	TitleLink    string          `json:"titleLink"`
+	Text         string          `json:"text"`
+	ThumbnailUrl string          `json:"thumbnailUrl"`
+}
+
+type MessageAction struct {
+	Title   string `json:"title"`
+	Message string `json:"message"`
+	Url     string `json:"url"`
+	Image   string `json:"image"`
+}
+
+type Account struct {
+	Name      string `json:"name"`
+	ChannelId string `json:"channelId"`
+	Address   string `json:"address"`
+	Id        string `json:"id"`
+	IsBot     bool   `json:"isBot"`
+}
+
+type Mention struct {
+	Mentioned Account `json:"mentioned"`
+	Text      string  `json:"text"`
 }

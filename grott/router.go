@@ -3,15 +3,16 @@ package grott
 import (
 	"fmt"
 	"github.com/michael-golfi/Grott/grott/dialog"
-	"github.com/michael-golfi/Grott/grott/types"
+	"github.com/michael-golfi/Grott/grott/activity"
 	"io/ioutil"
 	"net/http"
+	"github.com/michael-golfi/Grott/alfredo/controller"
 )
 
-func ListenAndServe(cont types.Controller, router *dialog.DialogRouter) error {
+func ListenAndServe(cont controller.Controller, router *dialog.DialogRouter) error {
 
 	http.HandleFunc("/api/messages", func(w http.ResponseWriter, r *http.Request) {
-		var message types.Activity
+		var message activity.Activity
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
 		b, err := ioutil.ReadAll(r.Body)

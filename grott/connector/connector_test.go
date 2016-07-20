@@ -3,7 +3,7 @@ package connector_test
 import (
 	"encoding/json"
 	"github.com/michael-golfi/Grott/grott/connector"
-	"github.com/michael-golfi/Grott/grott/types"
+	"github.com/michael-golfi/Grott/grott/activity"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"testing"
@@ -17,23 +17,23 @@ func TestClientConnector_CreateConversation_Send(t *testing.T) {
 	url := "http://localhost:9000"
 	conn := connector.NewClientConnector(url)
 
-	user := types.ChannelAccount{
+	user := activity.ChannelAccount{
 		Id:   "2c1c7fa3",
 		Name: "User1",
 	}
 
-	conversation := types.ConversationAccount{
+	conversation := activity.ConversationAccount{
 		Id:      "8a684db8",
 		Name:    "Conv1",
 		IsGroup: false,
 	}
 
-	recipient := types.ChannelAccount{
+	recipient := activity.ChannelAccount{
 		Id:   "Bot1",
 		Name: "Bot1",
 	}
 
-	activity := types.Activity{
+	activity := activity.Activity{
 		Type:         "message",
 		Id:           "a8e5599a0e434e92994ebec5506d2be5",
 		Timestamp:    time.Now(),
@@ -43,16 +43,16 @@ func TestClientConnector_CreateConversation_Send(t *testing.T) {
 		Conversation: conversation,
 		Recipient:    recipient,
 		Text:         "Hello User!",
-		Attachments:  []types.Attachment{},
-		Entities:     []types.Entity{},
+		Attachments:  []activity.Attachment{},
+		Entities:     []activity.Entity{},
 	}
 
 	headers := map[string]string{}
 
-	conversationParameters := types.ConversationParameters{
+	conversationParameters := activity.ConversationParameters{
 		Bot:       recipient,
 		IsGroup:   false,
-		Members:   []types.ChannelAccount{user},
+		Members:   []activity.ChannelAccount{user},
 		TopicName: "default",
 	}
 

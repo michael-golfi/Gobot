@@ -1,4 +1,4 @@
-package types
+package luis
 
 type ActionParameterValue struct {
 	Entity string  `json:"entity"`

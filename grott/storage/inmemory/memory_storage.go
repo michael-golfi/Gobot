@@ -3,20 +3,20 @@ package inmemory
 import (
 	"errors"
 	"fmt"
-	"github.com/michael-golfi/Grott/grott/types"
+	"github.com/michael-golfi/Grott/grott/storage"
 )
 
 type InMemoryStorage struct {
-	cache map[string]*types.DialogContext
+	cache map[string]*storage.DialogContext
 }
 
 func NewInMemoryStorage() *InMemoryStorage {
 	return &InMemoryStorage{
-		cache: make(map[string]*types.DialogContext),
+		cache: make(map[string]*storage.DialogContext),
 	}
 }
 
-func (s InMemoryStorage) Get(id string) (*types.DialogContext, error) {
+func (s InMemoryStorage) Get(id string) (*storage.DialogContext, error) {
 	fmt.Printf("InMemoryStorage: Get: %s\n", id)
 	if s.cache[id] != nil {
 		return s.cache[id], nil
@@ -25,7 +25,7 @@ func (s InMemoryStorage) Get(id string) (*types.DialogContext, error) {
 	return nil, errors.New("No data with id: " + id + " found")
 }
 
-func (s InMemoryStorage) Save(id string, data *types.DialogContext) error {
+func (s InMemoryStorage) Save(id string, data *storage.DialogContext) error {
 	fmt.Printf("InMemoryStorage: Save: %s\n", id)
 	s.cache[id] = data
 

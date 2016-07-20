@@ -3,15 +3,15 @@ package controller
 import (
 	"fmt"
 	"github.com/michael-golfi/Grott/grott/dialog"
-	"github.com/michael-golfi/Grott/grott/types"
 	"log"
+	"github.com/michael-golfi/Grott/grott/activity"
 )
 
 type Controller struct {
 	Router *dialog.DialogRouter
 }
 
-func (c Controller) Post(msg *types.Activity) {
+func (c Controller) Post(msg *activity.Activity) {
 	if msg.Type == "message" {
 		c.Router.HandleMessage(msg)
 	} else {
@@ -19,7 +19,7 @@ func (c Controller) Post(msg *types.Activity) {
 	}
 }
 
-func (c Controller) HandleSystemMessage(msg *types.Activity) {
+func (c Controller) HandleSystemMessage(msg *activity.Activity) {
 	fmt.Println("HandleSystemMessage")
 	fmt.Println(msg.Type)
 

@@ -3,37 +3,37 @@ package dialog
 import (
 	"fmt"
 	"github.com/michael-golfi/Grott/grott/storage"
-	"github.com/michael-golfi/Grott/grott/types"
+	"github.com/michael-golfi/Grott/grott/activity"
 	"github.com/michael-golfi/Grott/grott/storage/inmemory"
 )
 
 type DialogRouter struct {
-	Dialogs        []types.Dialoger
+	Dialogs        []Dialoger
 	ContextStorage storage.ContextStorage
 }
 
-func NewInMemoryStorageRouter(dialogs []types.Dialoger) *DialogRouter {
+func NewInMemoryStorageRouter(dialogs []Dialoger) *DialogRouter {
 	inMemoryStorage := inmemory.NewInMemoryStorage()
 	return NewRouter(dialogs, inMemoryStorage)
 }
 
-func NewRouter(dialogs []types.Dialoger, storage storage.ContextStorage) *DialogRouter {
+func NewRouter(dialogs []Dialoger, storage storage.ContextStorage) *DialogRouter {
 	return &DialogRouter{
 		Dialogs:        dialogs,
 		ContextStorage: storage,
 	}
 }
 
-func (router *DialogRouter) HandleMessage(message *types.Activity) {
+func (router *DialogRouter) HandleMessage(message *activity.Activity) {
 
-	go func(d *DialogRouter, m *types.Activity) {
+	go func(d *DialogRouter, m *activity.Activity) {
 
 		msgCtx, err := d.ContextStorage.Get(m.Conversation.Id)
 
 		if err != nil {
 			fmt.Println(err.Error())
 
-			d.ContextStorage.Save(m.Conversation.Id, &types.DialogContext{
+			d.ContextStorage.Save(m.Conversation.Id, &storage.DialogContext{
 				ConversationData:          make(map[string]string, 1),
 				PerUserInConversationData: make(map[string]string, 1),
 				UserData:                  make(map[string]string, 1),
