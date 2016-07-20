@@ -1,10 +1,10 @@
 package storage_test
 
 import (
-	"testing"
+	"github.com/michael-golfi/Grott/grott/storage"
 	"github.com/michael-golfi/Grott/grott/types"
 	"github.com/stretchr/testify/assert"
-	"github.com/michael-golfi/Grott/grott/storage"
+	"testing"
 )
 
 func TestInMemoryStorage(t *testing.T) {

@@ -1,6 +1,6 @@
 package types
 
 type Controller interface {
-	Post(msg *Activity) error
-	HandleSystemMessage(msg *Activity) error
+	Post(msg *Activity)
+	HandleSystemMessage(msg *Activity)
 }

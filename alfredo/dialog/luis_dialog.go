@@ -1,12 +1,12 @@
 package bot_dialog
 
 import (
-	"github.com/michael-golfi/Grott/grott/types"
+	"encoding/json"
 	"errors"
-	"net/url"
+	"github.com/michael-golfi/Grott/grott/types"
 	"log"
 	"net/http"
-	"encoding/json"
+	"net/url"
 )
 
 const LUIS_API_BASE string = "https://api.projectoxford.ai/luis/v1/application?"
@@ -27,9 +27,9 @@ func (d LuisDialog) HandleFunc(name string, f func(*types.DialogContext, *types.
 
 func (d LuisDialog) MessageReceived(ctx *types.DialogContext, msg types.Message) (*types.Message, error) {
 	parameters := map[string]string{
-		"id": d.AppId,
+		"id":               d.AppId,
 		"subscription-key": d.SubscriptionId,
-		"q": msg.Text,
+		"q":                msg.Text,
 	}
 
 	url := buildQueryString(LUIS_API_BASE, parameters)

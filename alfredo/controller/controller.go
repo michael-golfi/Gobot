@@ -1,52 +1,43 @@
 package controller
 
 import (
-	"fmt"
 	"errors"
-	"github.com/michael-golfi/Grott/grott/types"
+	"fmt"
 	"github.com/michael-golfi/Grott/grott/dialog"
+	"github.com/michael-golfi/Grott/grott/types"
+	"log"
 )
 
 type Controller struct {
 	Router *dialog.DialogRouter
 }
 
-func (c Controller) Post(msg *types.Activity) error {
+func (c Controller) Post(msg *types.Activity) {
 	if msg.Type == "message" {
-		return c.Router.HandleMessage(msg)
+		c.Router.HandleMessage(msg)
 	}
 
-	return c.HandleSystemMessage(msg)
+	c.HandleSystemMessage(msg)
 }
 
-func (c Controller) HandleSystemMessage(msg *types.Activity) error {
+func (c Controller) HandleSystemMessage(msg *types.Activity) {
 	fmt.Println("HandleSystemMessage")
 	fmt.Println(msg.Type)
-	if msg.Type == "BotAddedToConversation" {
-		fmt.Println("BotAddedToConversation")
-		return nil
-	}
 
-	if msg.Type == "UserAddedToConversation" {
-		fmt.Println("UserAddedToConversation")
-		return nil
+	var out string
+	switch msg.Type {
+	case "BotAddedToConversation":
+		out = "BotAddedToConversation"
+	case "UserAddedToConversation":
+		out = "UserAddedToConversation"
+	case "BotRemovedFromConversation":
+		out = "BotRemovedFromConversation"
+	case "UserRemovedFromConversation":
+		out = "UserRemovedFromConversation"
+	case "EndOfConversation":
+		out = "EndOfConversation"
+	default:
+		out = "Not A System Message"
 	}
-
-	if msg.Type == "BotRemovedFromConversation" {
-		fmt.Println("BotRemovedFromConversation")
-		return nil
-	}
-
-	if msg.Type == "UserRemovedFromConversation" {
-		fmt.Println("UserRemovedFromConversation")
-		return nil
-	}
-
-	if msg.Type == "EndOfConversation" {
-		fmt.Println("EndOfConversation")
-		return nil
-	}
-
-	return errors.New("Not a System Message")
+	log.Printf("HandleSystemMessage: %s", out)
 }
-

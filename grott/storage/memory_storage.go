@@ -2,8 +2,8 @@ package storage
 
 import (
 	"errors"
-	"github.com/michael-golfi/Grott/grott/types"
 	"fmt"
+	"github.com/michael-golfi/Grott/grott/types"
 )
 
 type InMemoryStorage struct {

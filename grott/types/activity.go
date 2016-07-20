@@ -3,29 +3,29 @@ package types
 import "time"
 
 type Activity struct {
-	Type             string              `json:"type"`
-	Id               string              `json:"id"`
-	ServiceUrl       string              `json:"serviceUrl"`
-	Timestamp        time.Time           `json:"timestamp"`
-	ChannelId        string              `json:"channelId"`
-	From             ChannelAccount      `json:"from"`
-	Conversation     ConversationAccount `json:"conversation"`
-	Recipient        ChannelAccount      `json:"recipient"`
+	Type         string              `json:"type"`
+	Id           string              `json:"id"`
+	ServiceUrl   string              `json:"serviceUrl"`
+	Timestamp    time.Time           `json:"timestamp"`
+	ChannelId    string              `json:"channelId"`
+	From         ChannelAccount      `json:"from"`
+	Conversation ConversationAccount `json:"conversation"`
+	Recipient    ChannelAccount      `json:"recipient"`
 
-	Locale           string `json:"locale"`
-	Text             string `json:"text"`
-	Summary          string `json:"summary"`
-	TextFormat       string `json:"textFormat"`
-	AttachmentLayout string `json:"attachmentLayout"`
+	Locale           string       `json:"locale"`
+	Text             string       `json:"text"`
+	Summary          string       `json:"summary"`
+	TextFormat       string       `json:"textFormat"`
+	AttachmentLayout string       `json:"attachmentLayout"`
 	Attachments      []Attachment `json:"attachments"`
-	Entities         []Entity `json:"entities"`
-	ChannelData      interface{} `json:"channelData"`
-	ReplyToId        string `json:"replyToId"`
-	Mentions         []Mention `json:"mentions"`
+	Entities         []Entity     `json:"entities"`
+	ChannelData      interface{}  `json:"channelData"`
+	ReplyToId        string       `json:"replyToId"`
+	Mentions         []Mention    `json:"mentions"`
 }
 
 type Entity struct {
-
+	Type string `json:"type"`
 }
 
 type ApiResponse struct {
@@ -59,18 +59,18 @@ type AttachmentUpload struct {
 
 func NewConversationParameters(bot ChannelAccount, isGroup bool, members []ChannelAccount, topic string) *ConversationParameters {
 	return &ConversationParameters{
-		Bot: bot,
-		IsGroup: isGroup,
-		Members: members,
+		Bot:       bot,
+		IsGroup:   isGroup,
+		Members:   members,
 		TopicName: topic,
 	}
 }
 
 func NewAttachmentUpload(typeName, name string, originalBase64, thumbnailBase64 []byte) *AttachmentUpload {
 	return &AttachmentUpload{
-		Type: typeName,
-		Name: name,
-		OriginalBase64: originalBase64,
+		Type:            typeName,
+		Name:            name,
+		OriginalBase64:  originalBase64,
 		ThumbnailBase64: thumbnailBase64,
 	}
 }

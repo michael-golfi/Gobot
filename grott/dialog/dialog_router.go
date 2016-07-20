@@ -1,13 +1,15 @@
 package dialog
 
 import (
-	"github.com/michael-golfi/Grott/grott/types"
-	"github.com/michael-golfi/Grott/grott/storage"
-	"sync"
 	"fmt"
+	"github.com/michael-golfi/Grott/grott/storage"
+	"github.com/michael-golfi/Grott/grott/types"
 )
 
+const DEFAULT_CHAN_SIZE = 10
+
 type DialogRouter struct {
+	input          chan types.Activity
 	Dialogs        []types.Dialoger
 	ContextStorage storage.ContextStorage
 }
@@ -19,17 +21,13 @@ func NewInMemoryStorageRouter(dialogs []types.Dialoger) *DialogRouter {
 
 func NewRouter(dialogs []types.Dialoger, storage storage.ContextStorage) *DialogRouter {
 	return &DialogRouter{
-		Dialogs: dialogs,
+		input:          make(chan types.Activity, DEFAULT_CHAN_SIZE),
+		Dialogs:        dialogs,
 		ContextStorage: storage,
 	}
 }
 
-func (router *DialogRouter) HandleMessage(message *types.Activity) error {
-
-	var e error
-
-	wait := sync.WaitGroup{}
-	wait.Add(1)
+func (router *DialogRouter) HandleMessage(message *types.Activity) {
 
 	go func(d *DialogRouter, m *types.Activity) {
 		highestIndex := 0
@@ -39,8 +37,6 @@ func (router *DialogRouter) HandleMessage(message *types.Activity) error {
 			highestIndex, err = getHighestScoringDialog(d.Dialogs, m)
 
 			if err != nil {
-				e = err
-				wait.Done()
 				return
 			}
 		}
@@ -54,22 +50,14 @@ func (router *DialogRouter) HandleMessage(message *types.Activity) error {
 				PerUserInConversationData: make(map[string]string, 1),
 				UserData:                  make(map[string]string, 1),
 			})
-			// TODO - Just means the ctx doesn't exist
 		}
 
 		err = d.Dialogs[highestIndex].MessageReceived(msgCtx, m)
 		if err != nil {
-			e = err
-			wait.Done()
 			return
 		}
-
-		e = nil
-		wait.Done()
 	}(router, message)
 
-	wait.Wait()
-	return e
 }
 
 func getHighestScoringDialog(dialogs []types.Dialoger, msg *types.Activity) (int, error) {

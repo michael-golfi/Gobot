@@ -1,58 +1,58 @@
 package connector_test
 
 import (
-	"testing"
+	"encoding/json"
 	"github.com/michael-golfi/Grott/grott/connector"
 	"github.com/michael-golfi/Grott/grott/types"
-	"time"
-	"io/ioutil"
-	"encoding/json"
 	"github.com/stretchr/testify/assert"
+	"io/ioutil"
+	"testing"
+	"time"
 )
 
 /**
-	This test requires running the Bot Emulator
- */
+This test requires running the Bot Emulator
+*/
 func TestClientConnector_CreateConversation_Send(t *testing.T) {
 	url := "http://localhost:9000"
 	conn := connector.NewClientConnector(url)
 
 	user := types.ChannelAccount{
-		Id: "2c1c7fa3",
+		Id:   "2c1c7fa3",
 		Name: "User1",
 	}
 
 	conversation := types.ConversationAccount{
-		Id: "8a684db8",
-		Name: "Conv1",
+		Id:      "8a684db8",
+		Name:    "Conv1",
 		IsGroup: false,
 	}
 
 	recipient := types.ChannelAccount{
-		Id: "Bot1",
+		Id:   "Bot1",
 		Name: "Bot1",
 	}
 
 	activity := types.Activity{
-		Type: "message",
-		Id: "a8e5599a0e434e92994ebec5506d2be5",
-		Timestamp: time.Now(),
-		ServiceUrl: "http://localhost:9000/",
-		ChannelId: "emulator",
-		From: user,
+		Type:         "message",
+		Id:           "a8e5599a0e434e92994ebec5506d2be5",
+		Timestamp:    time.Now(),
+		ServiceUrl:   "http://localhost:9000/",
+		ChannelId:    "emulator",
+		From:         user,
 		Conversation: conversation,
-		Recipient: recipient,
-		Text: "Hello User!",
-		Attachments: []types.Attachment{},
-		Entities: []types.Entity{},
+		Recipient:    recipient,
+		Text:         "Hello User!",
+		Attachments:  []types.Attachment{},
+		Entities:     []types.Entity{},
 	}
 
 	headers := map[string]string{}
 
 	conversationParameters := types.ConversationParameters{
-		Bot: recipient,
-		IsGroup: false,
-		Members: []types.ChannelAccount{user},
+		Bot:       recipient,
+		IsGroup:   false,
+		Members:   []types.ChannelAccount{user},
 		TopicName: "default",
 	}
 

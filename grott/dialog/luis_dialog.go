@@ -1,5 +1,9 @@
 package dialog
 
+/*
+
+	TODO - Need to reimplement LUIS Dialog Foundation for Bot Framework V3
+
 import (
 	"github.com/michael-golfi/Grott/grott/types"
 	"errors"
@@ -78,4 +82,4 @@ func getLuisIntent(luisResult *types.LuisResult) string {
 		}
 	}
 	return funcName
-}
+}*/

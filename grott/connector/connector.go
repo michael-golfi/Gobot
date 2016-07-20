@@ -1,17 +1,17 @@
 package connector
 
 import (
-	"fmt"
-	"net/http"
-	"encoding/json"
 	"bytes"
+	"encoding/json"
+	"fmt"
 	"github.com/michael-golfi/Grott/grott/types"
+	"net/http"
 	"net/url"
 )
 
 /**
-	Implements the Bot Framework API connection to allow Bot -> User communication
- */
+Implements the Bot Framework API connection to allow Bot -> User communication
+*/
 
 type ClientConnector struct {
 	baseUrl string

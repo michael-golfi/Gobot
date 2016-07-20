@@ -3,10 +3,10 @@ package grott
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/michael-golfi/Grott/grott/types"
-	"net/http"
 	"github.com/michael-golfi/Grott/grott/dialog"
+	"github.com/michael-golfi/Grott/grott/types"
 	"io/ioutil"
+	"net/http"
 )
 
 func ListenAndServe(cont types.Controller, router *dialog.DialogRouter) error {

@@ -65,23 +65,3 @@ type Location struct {
 	Latitude  float32 `json:"latitude"`
 	Longitude float32 `json:"longitude"`
 }
-
-type Localizer interface {
-	GetText(language, messageId string) string
-	NGetText(language, messageId, messageIdPlural string, count int) string
-}
-
-type SessionOptions struct {
-	Dialogs      []Dialoger  `json:"dialogs"`
-	DialogId     string      `json:"dialogId"`
-	DialogArgs   interface{} `json:"dialogArgs"`
-	Localizer    Localizer   `json:"localizer"`
-	MinSendDelay int32       `json:"minSendDelay"`
-}
-
-type BotConnectorMessage struct {
-	Message                      `json:"message"`
-	BotUserData                  map[string]interface{} `json:"botUserData"`
-	BotConversationData          map[string]interface{} `json:"botConversationData"`
-	BotPerUserInConversationData map[string]interface{} `json:"botPerUserInConversationData"`
-}

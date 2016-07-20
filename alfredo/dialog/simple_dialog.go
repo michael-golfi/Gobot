@@ -1,12 +1,11 @@
 package bot_dialog
 
 import (
-	"github.com/michael-golfi/Grott/grott/types"
 	"github.com/michael-golfi/Grott/grott/connector"
+	"github.com/michael-golfi/Grott/grott/types"
 )
 
 type SimpleDialog struct {
-
 }
 
 func (d SimpleDialog) MessageReceived(ctx *types.DialogContext, msg *types.Activity) error {
