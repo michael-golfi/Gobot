@@ -1,14 +1,6 @@
 package bot_dialog
 
-import (
-	"encoding/json"
-	"errors"
-	"github.com/michael-golfi/Grott/grott/types"
-	"log"
-	"net/http"
-	"net/url"
-)
-
+/*
 const LUIS_API_BASE string = "https://api.projectoxford.ai/luis/v1/application?"
 
 type LuisDialog struct {
@@ -80,3 +72,4 @@ func getLuisIntent(luisResult *types.LuisResult) string {
 	}
 	return funcName
 }
+*/

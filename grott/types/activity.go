@@ -57,24 +57,6 @@ type AttachmentUpload struct {
 	ThumbnailBase64 []byte `json:"thumbnailBase64"`
 }
 
-func NewConversationParameters(bot ChannelAccount, isGroup bool, members []ChannelAccount, topic string) *ConversationParameters {
-	return &ConversationParameters{
-		Bot:       bot,
-		IsGroup:   isGroup,
-		Members:   members,
-		TopicName: topic,
-	}
-}
-
-func NewAttachmentUpload(typeName, name string, originalBase64, thumbnailBase64 []byte) *AttachmentUpload {
-	return &AttachmentUpload{
-		Type:            typeName,
-		Name:            name,
-		OriginalBase64:  originalBase64,
-		ThumbnailBase64: thumbnailBase64,
-	}
-}
-
 func (a Activity) CreateReply(msg string) Activity {
 	activity := a
 	activity.From = a.Recipient
