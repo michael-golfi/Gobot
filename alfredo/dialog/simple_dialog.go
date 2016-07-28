@@ -4,6 +4,7 @@ import (
 	"github.com/michael-golfi/Grott/grott/connector"
 	"github.com/michael-golfi/Grott/grott/activity"
 	"log"
+	"fmt"
 	"github.com/michael-golfi/Grott/grott/storage"
 )
 
@@ -13,6 +14,9 @@ func (d SimpleDialog) MessageReceived(ctx *storage.DialogContext, msg *activity.
 	conn := connector.NewClientConnector(msg.ServiceUrl)
 	headers := map[string]string{}
 	msg.Text = "Hello User!"
+	
+	fmt.Println(msg)
+	fmt.Println(ctx)
 
 	from := msg.From
 	recipient := msg.Recipient
