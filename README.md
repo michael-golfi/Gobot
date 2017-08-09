@@ -1,12 +1,12 @@
 ![RoGo](https://raw.githubusercontent.com/michael-golfi/Grott/master/docs/logo/gopher-final.PNG)
 
-Go Bot Framework
+GoBot Framework
 
-## What is Grott?
+## What is GoBot?
 
-Grott is a framework which helps developers write bots in Go. It's designed to be quick, easy to write and pain-free to start working with!
+GoBot is a framework which helps developers write bots in Go. It's designed to be quick, easy to write and pain-free to start working with!
 
-## Why is Grott needed?
+## Why is GoBot needed?
 
 ## How do I use Grott?
 

@@ -13,10 +13,10 @@ func activity(bot Bot) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		session := getSession(bot, &mutex)
 
-		var dialog *Activity
-		if err := json.NewDecoder(r.Body).Decode(dialog); err != nil {
+		var dialog Activity
+		if err := json.NewDecoder(r.Body).Decode(&dialog); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			log.Printf("Bad Request")
+			log.Printf("Bad Request: %s", err.Error())
 			return
 		}
 

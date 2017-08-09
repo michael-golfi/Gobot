@@ -6,30 +6,30 @@ type SessionMemory struct {
 	ConversationData        *SessionData
 }
 
-func (s *SessionMemory) GetUserData() (*SessionData, error) {
+func (s SessionMemory) GetUserData() (*SessionData, error) {
 	return nil, nil
 }
 
-func (s *SessionMemory) GetConversationData() (*SessionData, error) {
+func (s SessionMemory) GetConversationData() (*SessionData, error) {
 	return nil, nil
 }
 
-func (s *SessionMemory) GetPrivateConversationData() (*SessionData, error) {
+func (s SessionMemory) GetPrivateConversationData() (*SessionData, error) {
 	return nil, nil
 }
 
-func (s *SessionMemory) SetUserData() error {
+func (s SessionMemory) SetUserData() error {
 	return nil
 }
 
-func (s *SessionMemory) SetConversationData() error {
+func (s SessionMemory) SetConversationData() error {
 	return nil
 }
 
-func (s *SessionMemory) SetPrivateConversationData() error {
+func (s SessionMemory) SetPrivateConversationData() error {
 	return nil
 }
 
-func (s *SessionMemory) ClearUserState() {
+func (s SessionMemory) ClearUserState() {
 
 }
