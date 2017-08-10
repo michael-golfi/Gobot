@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/michael-golfi/Grott"
 	"github.com/michael-golfi/Grott/storage"
@@ -18,9 +18,18 @@ func (b SampleBot) GetSession() bot.Session {
 	return storage.SessionMemory{}
 }
 
-func (b SampleBot) Post(session *bot.Session) {
-	// Do something
-	fmt.Println("Hello Bot")
+func (b SampleBot) Post(session *bot.Session, activity *bot.Activity) {
+	switch activity.Type {
+	case "conversationUpdate":
+		break
+
+	case "message":
+
+		break
+
+	default:
+		log.Printf("Unsupported Message Type: %s\n", activity.Type)
+	}
 }
 
 func main() {

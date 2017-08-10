@@ -20,7 +20,7 @@ func activity(bot Bot) http.Handler {
 			return
 		}
 
-		bot.Post(session)
+		bot.Post(session, &dialog)
 	})
 }
 

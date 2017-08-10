@@ -21,7 +21,7 @@ func setup() {
 type Bot interface {
 	Initialize()
 	GetSession() Session
-	Post(session *Session)
+	Post(session *Session, activity *Activity)
 }
 
 func Listen(bot Bot) {
