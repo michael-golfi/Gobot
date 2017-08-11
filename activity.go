@@ -4,33 +4,33 @@ import "time"
 
 // Activity defines a message that is exchanged between bot and user.
 type Activity struct {
-	Action           string
-	Attachments      []Attachment          `json:"attachments,omitempty"`
-	AttachmentLayout string                `json:"attachmentLayout,omitempty"`
-	ChannelData      interface{}           `json:"channelData,omitempty"`
-	ChannelID        string                `json:"channelId,omitempty"`
-	Conversation     ConversationAccount   `json:"conversation,omitempty"`
-	Entities         []interface{}         `json:"entities,omitempty"`
-	From             ChannelAccount        `json:"from,omitempty"`
-	HistoryDisclosed bool                  `json:"historyDisclosed,omitempty"`
-	ID               string                `json:"id,omitempty"`
-	InputHint        string                `json:"inputHint,omitempty"`
-	Locale           string                `json:"locale,omitempty"`
-	LocalTimestamp   time.Time             `json:"localTimestamp,omitempty"`
-	MembersAdded     []ChannelAccount      `json:"membersAdded,omitempty"`
-	MembersRemoved   []ChannelAccount      `json:"membersRemoved,omitempty"`
-	Recipient        ChannelAccount        `json:"recipient,omitempty"`
-	RelatesTo        ConversationReference `json:"relatesTo,omitempty"`
-	ReplyToID        string                `json:"replyToId,omitempty"`
-	ServiceURL       string                `json:"serviceUrl,omitempty"`
-	Speak            string                `json:"speak,omitempty"`
-	SuggestedActions SuggestedActions      `json:"suggestedActions,omitempty"`
-	Summary          string                `json:"summary,omitempty"`
-	Text             string                `json:"text,omitempty"`
-	TextFormat       string                `json:"textFormat,omitempty"`
-	Timestamp        time.Time             `json:"timestamp,omitempty"`
-	TopicName        string                `json:"topicName,omitempty"`
-	Type             string                `json:"type,omitempty"`
+	Action           string                 `json:"action,omitempty"`
+	Attachments      []Attachment           `json:"attachments,omitempty"`
+	AttachmentLayout string                 `json:"attachmentLayout,omitempty"`
+	ChannelData      interface{}            `json:"channelData,omitempty"`
+	ChannelID        string                 `json:"channelId,omitempty"`
+	Conversation     ConversationAccount    `json:"conversation"`
+	Entities         []interface{}          `json:"entities,omitempty"`
+	From             ChannelAccount         `json:"from"`
+	HistoryDisclosed bool                   `json:"historyDisclosed,omitempty"`
+	ID               string                 `json:"id,omitempty"`
+	InputHint        string                 `json:"inputHint,omitempty"`
+	Locale           string                 `json:"locale,omitempty"`
+	LocalTimestamp   time.Time              `json:"localTimestamp,omitempty"`
+	MembersAdded     []ChannelAccount       `json:"membersAdded,omitempty"`
+	MembersRemoved   []ChannelAccount       `json:"membersRemoved,omitempty"`
+	Recipient        ChannelAccount         `json:"recipient"`
+	RelatesTo        *ConversationReference `json:"relatesTo,omitempty"`
+	ReplyToID        string                 `json:"replyToId,omitempty"`
+	ServiceURL       string                 `json:"serviceUrl,omitempty"`
+	Speak            string                 `json:"speak,omitempty"`
+	SuggestedActions *SuggestedActions      `json:"suggestedActions,omitempty"`
+	Summary          string                 `json:"summary,omitempty"`
+	Text             string                 `json:"text,omitempty"`
+	TextFormat       string                 `json:"textFormat,omitempty"`
+	Timestamp        time.Time              `json:"timestamp,omitempty"`
+	TopicName        string                 `json:"topicName,omitempty"`
+	Type             string                 `json:"type,omitempty"`
 }
 
 // AnimationCard defines a card that can play animated GIFs or short videos.
@@ -282,16 +282,13 @@ var (
 
 func (a *Activity) CreateReply(text, locale string) Activity {
 	return Activity{
-		//Action:           "",
-		Attachments: nil,
-		//AttachmentLayout: "",
+		Attachments:  nil,
 		ChannelData:  nil,
 		ChannelID:    a.ChannelID,
 		Conversation: a.Conversation,
 		Entities:     []interface{}{},
 		From:         a.Recipient,
-		//HistoryDisclosed: false,
-		//ID: nil,
+
 		LocalTimestamp: time.Now(),
 		Type:           Message,
 		Timestamp:      time.Now().UTC(),
@@ -303,8 +300,5 @@ func (a *Activity) CreateReply(text, locale string) Activity {
 		Text:       text,
 		TextFormat: "plain",
 		Locale:     locale,
-
-		//MembersAdded:   []ChannelAccount{},
-		//MembersRemoved: []ChannelAccount{},
 	}
 }
