@@ -19,9 +19,8 @@ func setup() {
 }
 
 type Bot interface {
-	Initialize(connector *Connector)
+	Initialize()
 
-	SetToken(token string)
 	GetSession() Session
 
 	Post(session *Session, activity *Activity)
@@ -35,11 +34,9 @@ func Listen(bot Bot) {
 
 	path := "/api/messages"
 
-	conn := &Connector{}
-
 	router := mux.NewRouter()
 	router.
-		Handle(path, activity(bot, conn)).
+		Handle(path, activity(bot)).
 		Methods("POST")
 
 	log.Printf("Started %s at %s", name, port)

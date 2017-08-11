@@ -13,11 +13,8 @@ var (
 	client = request.BotHTTPClient{}
 )
 
-type Connector struct {
-}
-
 // CreateConversation - Needs proper testing
-func (c *Connector) CreateConversation(activity *Activity, params *ConversationParameters) error {
+func CreateConversation(activity *Activity, params *ConversationParameters) error {
 	url := fmt.Sprintf(request.CreateConversationPath, activity.ServiceURL)
 	log.Printf("Createconversation: %s", url)
 
@@ -43,7 +40,7 @@ func CreateDirectConversation(activity *Activity) error {
 }*/
 
 // DeleteActivity - Needs proper testing
-func (c *Connector) DeleteActivity(activity *Activity) error {
+func DeleteActivity(activity *Activity) error {
 	url := fmt.Sprintf(request.DeleteActivityPath, activity.ServiceURL, activity.Conversation.ID)
 	log.Printf("DeleteActivity: %s", url)
 
@@ -55,7 +52,7 @@ func (c *Connector) DeleteActivity(activity *Activity) error {
 }
 
 // GetConversationMembers - Successfully returns members
-func (c *Connector) GetConversationMembers(activity *Activity) ([]ChannelAccount, error) {
+func GetConversationMembers(activity *Activity) ([]ChannelAccount, error) {
 	url := fmt.Sprintf(request.GetConversationMembersPath, activity.ServiceURL, activity.Conversation.ID)
 	log.Printf("GetConversationMembers: %s", url)
 
@@ -73,7 +70,7 @@ func (c *Connector) GetConversationMembers(activity *Activity) ([]ChannelAccount
 }
 
 // GetActivityMembers - Successfully returns members
-func (c *Connector) GetActivityMembers(activity *Activity) ([]ChannelAccount, error) {
+func GetActivityMembers(activity *Activity) ([]ChannelAccount, error) {
 	url := fmt.Sprintf(request.GetActivityMembersPath, activity.ServiceURL, activity.Conversation.ID, activity.ID)
 	log.Printf("GetActivityMembers: %s", url)
 
@@ -91,7 +88,7 @@ func (c *Connector) GetActivityMembers(activity *Activity) ([]ChannelAccount, er
 }
 
 // ReplyToActivity - Successfully sends messages
-func (c *Connector) ReplyToActivity(activity *Activity) error {
+func ReplyToActivity(activity *Activity) error {
 	url := fmt.Sprintf(request.ReplyToActivityPath, activity.ServiceURL, activity.Conversation.ID, activity.ReplyToID)
 	log.Printf("ReplyToActivity: %s", url)
 
@@ -108,7 +105,7 @@ func (c *Connector) ReplyToActivity(activity *Activity) error {
 }
 
 // SendToConversation - Successfully sends messages
-func (c *Connector) SendToConversation(activity *Activity) error {
+func SendToConversation(activity *Activity) error {
 	url := fmt.Sprintf(request.SendToConversationPath, activity.ServiceURL, activity.Conversation.ID)
 	log.Printf("SendToConversation: %s", url)
 
@@ -125,7 +122,7 @@ func (c *Connector) SendToConversation(activity *Activity) error {
 }
 
 // UploadAttachment - Needs proper testing
-func (c *Connector) UploadAttachment(activity *Activity, attachment *AttachmentUpload) error {
+func UploadAttachment(activity *Activity, attachment *AttachmentUpload) error {
 	url := fmt.Sprintf(request.UploadAttachmentPath, activity.ServiceURL, activity.Conversation.ID)
 	log.Printf("UploadAttachment: %s", url)
 

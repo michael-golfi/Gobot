@@ -7,10 +7,10 @@ import (
 	"sync"
 )
 
-func activity(bot Bot, connector *Connector) http.Handler {
+func activity(bot Bot) http.Handler {
 	mutex := sync.Mutex{}
 
-	bot.Initialize(connector)
+	bot.Initialize()
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
