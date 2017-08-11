@@ -1,3 +1,5 @@
 app:
   name: SampleBot
   port: ":3978"
+  appId: 90769a18-d2dd-401b-ba98-a7676fdc5897
+  appSecret: mHCaRfzoYBO8RY3JeZp5RKh

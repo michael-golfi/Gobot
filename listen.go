@@ -19,8 +19,11 @@ func setup() {
 }
 
 type Bot interface {
-	Initialize()
+	Initialize(connector *Connector)
+
+	SetToken(token string)
 	GetSession() Session
+
 	Post(session *Session, activity *Activity)
 }
 
@@ -29,13 +32,14 @@ func Listen(bot Bot) {
 
 	name := viper.GetString("app.name")
 	port := viper.GetString("app.port")
+
 	path := "/api/messages"
 
-	bot.Initialize()
+	conn := &Connector{}
 
 	router := mux.NewRouter()
 	router.
-		Handle(path, activity(bot)).
+		Handle(path, activity(bot, conn)).
 		Methods("POST")
 
 	log.Printf("Started %s at %s", name, port)

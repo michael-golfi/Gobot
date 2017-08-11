@@ -9,10 +9,16 @@ import (
 )
 
 type SampleBot struct {
+	Connector *bot.Connector
+	token     string
 }
 
-func (b SampleBot) Initialize() {
+func (b SampleBot) Initialize(connector *bot.Connector) {
+	b.Connector = connector
+}
 
+func (b SampleBot) SetToken(token string) {
+	b.token = token
 }
 
 func (b SampleBot) GetSession() bot.Session {
@@ -28,31 +34,43 @@ func (b SampleBot) Post(session *bot.Session, activity *bot.Activity) {
 
 		switch activity.Text {
 
+		case "create":
+			conversationParameters := bot.ConversationParameters{
+				Bot:       activity.Recipient,
+				IsGroup:   activity.Conversation.IsGroup,
+				Members:   []bot.ChannelAccount{activity.From},
+				TopicName: activity.TopicName,
+			}
+
+			b.Connector.CreateConversation(activity, &conversationParameters)
 		case "get_activity_members":
-			m, err := bot.GetActivityMembers(activity)
+			m, err := b.Connector.GetActivityMembers(activity)
 			spew.Dump(m, err)
 			break
 
 		case "get_conversation_members":
-			m, err := bot.GetConversationMembers(activity)
+			m, err := b.Connector.GetConversationMembers(activity)
 			spew.Dump(m, err)
 			break
 
 		case "send":
-			activity.Text = "Hello hello"
-			bot.SendToConversation(activity)
+			mockActivity := activity.CreateReply("Hello User!", "en-US")
+			b.Connector.SendToConversation(&mockActivity)
+			//spew.Dump(activity, mockActivity)
 			break
 
 		case "reply":
-			activity.Text = "Hello hello"
-			bot.ReplyToActivity(activity)
+			mockActivity := activity.CreateReply("Hello User!", "en-US")
+			b.Connector.ReplyToActivity(&mockActivity)
+
+			//spew.Dump(activity, mockActivity)
 			break
 
 		case "update":
 			break
 
 		case "delete":
-			bot.DeleteActivity(activity)
+			b.Connector.DeleteActivity(activity)
 			break
 
 		default:

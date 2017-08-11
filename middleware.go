@@ -7,10 +7,13 @@ import (
 	"sync"
 )
 
-func activity(bot Bot) http.Handler {
+func activity(bot Bot, connector *Connector) http.Handler {
 	mutex := sync.Mutex{}
 
+	bot.Initialize(connector)
+
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 		session := getSession(bot, &mutex)
 
 		var dialog Activity
