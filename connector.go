@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/michael-golfi/Grott/request"
 )
 
@@ -93,6 +94,8 @@ func ReplyToActivity(activity *Activity) error {
 	log.Printf("ReplyToActivity: %s", url)
 
 	b := new(bytes.Buffer)
+	spew.Dump(activity)
+
 	if err := json.NewEncoder(b).Encode(activity); err != nil {
 		return err
 	}
