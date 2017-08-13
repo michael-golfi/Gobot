@@ -1,4 +1,4 @@
-![RoGo](https://raw.githubusercontent.com/michael-golfi/Grott/master/docs/logo/gopher-final.PNG)
+![RoGo](https://raw.githubusercontent.com/michael-golfi/Gobot/master/assets/logo.png)
 
 GoBot Framework
 
@@ -8,6 +8,6 @@ GoBot is a framework which helps developers write bots in Go. It's designed to b
 
 ## Why is GoBot needed?
 
-## How do I use Grott?
+## How do I use GoBot?
 
 It's simple. The APIs to enable communication between users and bots are delivered to you. Using the functions in the connector package, a developer could send messages to  
